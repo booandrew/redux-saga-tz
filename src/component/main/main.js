@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components'
 import { loadData } from '../../logic/actions';
-import { todosAPI } from '../../service/api-service';
 import AddItemForm from '../add-item-form';
 import Header from '../header';
 import SearchPanel from '../search-panel';
@@ -17,7 +16,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(loadData())
-  }, [])
+  }, [dispatch])
 
   const todoData = useSelector(state => state.todos)
   const isFetching = useSelector(state => state.isTodosFetching)
