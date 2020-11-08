@@ -25,8 +25,12 @@ const TodoListItem = ({
   }
 
   const onSubmit = () => {
-    onEditSubmit(value, id)
-    setIsEdited(false)
+    if (value) {
+      onEditSubmit(value, id)
+      setIsEdited(false)
+    }  else {
+      alert('Таска не может быть пустой')
+    }
   }
 
   const buttons = [
@@ -49,7 +53,12 @@ const TodoListItem = ({
 
         <TextWrapper>
           {isEdited ?
-            <Input placeholder="type new task" onBlur={onSubmit} onChange={onValueChange} value={value} size="middle" />
+            <Input
+              placeholder="type new task"
+              onBlur={onSubmit}
+              onChange={onValueChange}
+              value={value}
+              size="middle" />
             :
             <CustomText
               delete={completed}
@@ -82,7 +91,6 @@ const TextWrapper = styled.div`
 const CustomText = styled(Text)`
   font-size: 1.2rem;
   cursor: pointer;
-
   @media (max-width: 992px) {
     font-size: 1rem;
   }

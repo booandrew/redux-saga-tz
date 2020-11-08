@@ -9,13 +9,8 @@ const instance = axios.create({
 })
 
 export const todosAPI = {
-	getTodos () {
-   return instance.get(`/todos?_limit=5`)
-    .then(response => response.data)
+	getTodos() {
+		return instance.get(`/todos?_limit=5`)
+			.then(response => response.data)
 	}
-}
-
-export const fetchData = () => {
-  return fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-    .then(response => response.json())
 }

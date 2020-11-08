@@ -20,7 +20,7 @@ const Main = () => {
   }, [])
 
   const todoData = useSelector(state => state.todos)
-  const [qwe, setTodos] = useState([])
+  const isFetching = useSelector(state => state.isTodosFetching)
   const [term, setTerm] = useState('')
   const [filter, setfilter] = useState('')
   const doneCount = todoData.filter((el) => el.completed).length
@@ -38,8 +38,9 @@ const Main = () => {
   }
 
   const filterItems = (items, filter) => {
+
     switch (filter) {
-      case 'completed':
+      case 'Completed':
         return items.filter(e => e.completed)
       case 'Active':
         return items.filter(e => !e.completed)
@@ -50,34 +51,12 @@ const Main = () => {
 
   const visibleItems = filterItems(searchItem(todoData, term), filter)
 
-  const toggleProperty = (propName, id, value) => {
-
-    setTodos((prev) => {
-      const idx = prev.findIndex(el => el.id === id)
-      const updatedItem = propName === 'title' ?
-        { ...prev[idx], [propName]: value } :
-        { ...prev[idx], [propName]: !prev[idx][propName] && true }
-
-      const newArray = [
-        ...prev.slice(0, idx),
-        updatedItem,
-        ...prev.slice(idx + 1)
-      ]
-      return newArray
-    }
-    )
-  }
-
   const onSearch = (element) => {
     setTerm(element.target.value)
   }
 
   const onToggleFilter = (filter) => {
     setfilter(filter)
-  }
-
-  const onEditSubmit = (value, id) => {
-    toggleProperty('title', id, value)
   }
 
   return (
@@ -89,17 +68,20 @@ const Main = () => {
           doneCount={doneCount} />
 
         <FilterWrapper>
+
           <InputWrapper>
             <SearchPanel onSearch={onSearch} value={term} />
           </InputWrapper>
+
           <TodoStatusFilter onToggleFilter={onToggleFilter} />
+
         </FilterWrapper>
+        {isFetching ?
+          <p>Loading...</p>
+          : <TodoList todoData={visibleItems} />}
 
-        <TodoList
-          todoData={visibleItems}
-           />
 
-        <AddItemForm  />
+        <AddItemForm />
       </Container>
 
     </Layout>
@@ -114,7 +96,7 @@ const Container = styled.div`
 `
 
 const InputWrapper = styled.div`
-  flex: .9;
+  flex: .97;
 `
 
 const FilterWrapper = styled.div`

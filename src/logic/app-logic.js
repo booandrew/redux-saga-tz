@@ -1,8 +1,10 @@
-import { ADD_TODO, COMPLETE_TODO, DELETE_TODO, EDIT_TODO, PUT_DATA } from "./actions"
+import { ADD_TODO, COMPLETE_TODO, DELETE_TODO, EDIT_TODO, LOAD_DATA, PUT_DATA } from "./actions"
 
 
 const initialState = {
-  todos: []
+  todos: [],
+  isTodosFetching: false
+
 }
 console.log(initialState.todos)
 
@@ -10,19 +12,19 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case PUT_DATA:
-      return { ...state, todos: action.payload }
+      const data = { ...state, todos: action.payload, isTodosFetching: false }
+      debugger
+      return data
 
     case COMPLETE_TODO:
-      const prev = state.todos
-      const idx = prev.findIndex(el => el.id === action.payload)
-      const updatedItem = { ...prev[idx], completed: !prev[idx].completed && true }
-
-      const newArray = [
-        ...prev.slice(0, idx),
-        updatedItem,
-        ...prev.slice(idx + 1)
-      ]
-      return { ...state, todos: newArray }
+      const idx = state.todos.findIndex(el => el.id === action.payload)
+      return {
+        ...state, todos: [
+          ...state.todos.slice(0, idx),
+          { ...state.todos[idx], completed: !state.todos[idx].completed && true },
+          ...state.todos.slice(idx + 1)
+        ]
+      }
 
     case ADD_TODO:
       return {
@@ -50,6 +52,12 @@ export const reducer = (state = initialState, action) => {
         item,
         ...state.todos.slice(index + 1)
       ] }
+
+    case LOAD_DATA:
+      return {
+        ...state,
+        isTodosFetching: true
+      }
 
     default: return state
   }

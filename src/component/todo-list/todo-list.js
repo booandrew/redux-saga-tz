@@ -15,11 +15,7 @@ const TodoList = ({todoData}) => {
 
   const onToggleDone = (id) => dispatch(completeTodo(id))
   const onDeleted = (id) =>  dispatch(deleteTodo(id))
-  const onEditSubmit = (value, id) =>  {
-    debugger
-    dispatch(editTodo(value, id))
-  }
-  
+  const onEditSubmit = (value, id) =>  dispatch(editTodo(value, id))
 
 
   const renderElements = (todos) => {

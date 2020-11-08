@@ -39,7 +39,6 @@ export const deleteTodo = (id) => {
 }
 
 export const editTodo = (value,id) => {
-  debugger
   return {
     type: EDIT_TODO,
     value,

@@ -3,7 +3,7 @@ import { todosAPI } from '../service/api-service'
 import { LOAD_DATA, putData } from './actions'
 
 function* workerLoadData() {
-  const data = yield call(todosAPI.getTodos)
+  const data = yield call(todosAPI.getTodos)  
   yield put(putData(data))
 }
 

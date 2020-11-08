@@ -7,7 +7,7 @@ const TodoStatusFilter = ({ onToggleFilter }) => {
   const buttons = [
     { label: 'Active' },
     { label: 'All' },
-    { label: 'Done' }
+    { label: 'Completed' }
   ].map(({ label }) => <Menu.Item
     value={label}
     key={label}
@@ -21,7 +21,7 @@ const TodoStatusFilter = ({ onToggleFilter }) => {
   );
 
   return (
-    <Dropdown overlay={menu}>
+    <Dropdown overlay={menu} trigger={['click']}>
       <Button size='large' icon={<FilterOutlined />} />
     </Dropdown>
   );
